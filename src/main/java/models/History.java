@@ -33,19 +33,19 @@ public class History {
     @Column(name = "learned_date", nullable = false)
     private Date learmed_date;
 
-    @Column(name = "learning_time")
+    @Column(name = "learning_time", nullable = false)
     private Integer learning_time;
 
-    @Column(name = "started_at")
+    @Column(name = "started_at", nullable = false)
     private Timestamp started_at;
 
-    @Column(name = "finished_at")
+    @Column(name = "finished_at", nullable = false)
     private Timestamp finished_at;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 255, nullable = false)
     private String title;
 
     @Lob
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 }
