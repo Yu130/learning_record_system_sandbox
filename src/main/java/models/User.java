@@ -10,10 +10,14 @@ import javax.persistence.Table;
 @Table(name = "user")
 @Entity
 public class User {
-    @Id
+
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Id
+    @Column(name = "user_id", nullable = false, unique = true)
+    private Integer user_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -33,6 +37,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {

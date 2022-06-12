@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Table(name = "history")
 @NamedQueries({
-        @NamedQuery(name = "getAllLearningHistory", query = "SELECT h FROM History AS h ORDER BY h.id DESC"),
+        @NamedQuery(name = "getAllLearningHistory", query = "SELECT h FROM History AS h ORDER BY h.learned_date DESC"),
         @NamedQuery(name = "getHistoryCount", query = "SELECT COUNT(h) FROM History AS h")
 })
 @Entity
