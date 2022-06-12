@@ -21,7 +21,7 @@
                         <td><c:out value="${history.learned_date}" /></td>
                         <td><c:out value="${history.title}" /></td>
                         <td><c:out value="${history.learning_time}" /></td>
-                        <td><a href="<c:url value='/history/show?id=${id}' />">詳細を表示</a></td>
+                        <td><a href="<c:url value='/history/show?id=${user_id}' />">詳細を表示</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
