@@ -1,4 +1,4 @@
-package controllers;
+package controllers.history;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,14 +17,14 @@ import utils.DBUtil;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/history/index")
+public class HistoryIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IndexServlet() {
+    public HistoryIndexServlet() {
         super();
     }
 
