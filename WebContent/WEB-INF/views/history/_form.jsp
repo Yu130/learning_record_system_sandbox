@@ -18,16 +18,16 @@
 <input type="text" name="title" value="${history.title}" />
 <br /><br />
 
-<label for="title">学習時間</label><br />
+<label for="learning_time">学習時間</label><br />
 <input type="text" name="learning_time" value="${history.learning_time}" />
 <br /><br />
 
-<label for="started_at">開始時刻</label><br />
-<input type="datetime" name="started_at" value="<fmt:formatDate value='${history.started_at}' pattern='yyyy-MM-dd hh:mm' />" />
+<label for="started_at">開始時刻 (yyyy-MM-dd hh:mm:ss)</label><br />
+<input type="datetime" name="started_at" value="<fmt:formatDate value='${history.started_at}' pattern='yyyy-MM-dd hh:mm:ss' />" />
 <br /><br />
 
-<label for="finished_date">終了時刻</label><br />
-<input type="datetime" name="finished_at" value="<fmt:formatDate value='${history.started_at}' pattern='yyyy-MM-dd hh:mm' />" />
+<label for="finished_date">終了時刻 (yyyy-MM-dd hh:mm:ss)</label><br />
+<input type="datetime" name="finished_at" value="<fmt:formatDate value='${history.finished_at}' pattern='yyyy-MM-dd hh:mm:ss' />" />
 <br /><br />
 
 <label for="content">内容</label><br />

@@ -11,7 +11,17 @@
     <body>
         <div id="wrapper">
             <div id="header">
-                <h1>学習記録システム</h1>
+                <div id="header_menu">
+                    <h1><a href="<c:url value='/history/index' />">学習記録システム</a></h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="<c:url value="/measuring/startMeasuring.jsp" />">学習時間計測</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="<c:url value='/progress/index' />">進捗管理</a>
+                </div>
+                <c:if test="${sessionScope.login_user != null}">
+                   <div id="user_name">
+                       <c:out value="${sessionScope.login_user.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
+                       <a href="<c:url value='/logout' />">ログアウト</a>
+                   </div>
+                </c:if>
             </div>
             <div id="content">
                 ${param.content}

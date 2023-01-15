@@ -1,8 +1,8 @@
 package controllers.history;
 
 import java.io.IOException;
-import java.sql.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.History;
+import utils.DBUtil;
 
 /**
- * Servlet implementation class HistoryNewServlet
+ * Servlet implementation class HistoryShowServlet
  */
-@WebServlet("/history/new")
-public class HistoryNewServlet extends HttpServlet {
+@WebServlet("/history/show")
+public class HistoryShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HistoryNewServlet() {
+    public HistoryShowServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -32,14 +32,16 @@ public class HistoryNewServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        EntityManager em = DBUtil.createEntityManager();
+
+        History h = em.find(History.class, Integer.parseInt(request.getParameter("id")));
+
+        em.close();
+
+        request.setAttribute("history", h);
         request.setAttribute("_token", request.getSession().getId());
 
-        History h = new History();
-
-        h.setLearned_date(new Date(System.currentTimeMillis()));
-        request.setAttribute("history", h);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/history/new.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/history/show.jsp");
         rd.forward(request, response);
     }
 

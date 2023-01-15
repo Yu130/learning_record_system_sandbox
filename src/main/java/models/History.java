@@ -17,8 +17,10 @@ import javax.persistence.Table;
 
 @Table(name = "history")
 @NamedQueries({
-        @NamedQuery(name = "getAllLearningHistory", query = "SELECT h FROM History AS h ORDER BY h.learned_date DESC"),
-        @NamedQuery(name = "getHistoryCount", query = "SELECT COUNT(h) FROM History AS h")
+        @NamedQuery(name = "getMonthlyLearningHistory", query = "SELECT h FROM History AS h WHERE h.learned_year_month LIKE :ym ORDER BY h.started_at DESC"),
+        @NamedQuery(name = "getTotalLearningTime", query = "SELECT SUM(h.learning_time) FROM History AS h"),
+        @NamedQuery(name = "getTotalMonthlyLearningTime", query = "SELECT SUM(h.learning_time) FROM History AS h WHERE h.learned_year_month LIKE :ym"),
+        @NamedQuery(name = "getMonthlyHistoryCount", query = "SELECT COUNT(h) FROM History AS h WHERE h.learned_year_month LIKE :ym")
 })
 @Entity
 public class History {
@@ -33,6 +35,9 @@ public class History {
 
     @Column(name = "learned_date", nullable = false)
     private Date learned_date;
+
+    @Column(name = "learned_year_month", nullable = false)
+    private String learned_year_month;
 
     @Column(name = "learning_time", nullable = false)
     private Integer learning_time;
@@ -72,6 +77,14 @@ public class History {
 
     public void setLearned_date(Date learned_date) {
         this.learned_date = learned_date;
+    }
+
+    public String getLearned_year_month() {
+        return learned_year_month;
+    }
+
+    public void setLearned_year_month(String learned_year_month) {
+        this.learned_year_month = learned_year_month;
     }
 
     public Integer getLearning_time() {

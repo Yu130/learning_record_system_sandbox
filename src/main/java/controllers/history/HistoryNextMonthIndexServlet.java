@@ -2,6 +2,7 @@ package controllers.history;
 
 import java.io.IOException;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,17 +17,18 @@ import models.History;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class HistoryNextMonthIndexServlet
  */
-@WebServlet("/history/index")
-public class HistoryIndexServlet extends HttpServlet {
+@WebServlet("/history/nextMonthIndex")
+public class HistoryNextMonthIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HistoryIndexServlet() {
+    public HistoryNextMonthIndexServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -42,14 +44,9 @@ public class HistoryIndexServlet extends HttpServlet {
         } catch (NumberFormatException e) {
         }
 
-        YearMonth year_month = YearMonth.now();
         YearMonth current_ym = (YearMonth) request.getSession().getAttribute("current_ym");
-        String ym = null;
-        if (current_ym != null) {
-            ym = current_ym.toString();
-        } else {
-            ym = year_month.toString();
-        }
+        YearMonth next_ym = current_ym.plus(1, ChronoUnit.MONTHS);
+        String ym = next_ym.toString();
 
         List<History> history = em.createNamedQuery("getMonthlyLearningHistory", History.class)
                 .setParameter("ym", ym)
@@ -63,17 +60,10 @@ public class HistoryIndexServlet extends HttpServlet {
 
         em.close();
 
-        int year;
-        int month;
-        if (current_ym != null) {
-            year = current_ym.getYear();
-            month = current_ym.getMonthValue();
-        } else {
-            year = year_month.getYear();
-            month = year_month.getMonthValue();
-        }
+        int year = next_ym.getYear();
+        int month = next_ym.getMonthValue();
 
-        request.getSession().setAttribute("current_ym", year_month);
+        request.getSession().setAttribute("current_ym", next_ym);
         request.setAttribute("year", year);
         request.setAttribute("month", month);
         request.setAttribute("history", history);

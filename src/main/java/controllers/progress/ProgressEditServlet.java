@@ -1,8 +1,8 @@
-package controllers.history;
+package controllers.progress;
 
 import java.io.IOException;
-import java.sql.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.History;
+import models.User;
+import utils.DBUtil;
 
 /**
- * Servlet implementation class HistoryNewServlet
+ * Servlet implementation class ProgressEditServlet
  */
-@WebServlet("/history/new")
-public class HistoryNewServlet extends HttpServlet {
+@WebServlet("/progress/edit")
+public class ProgressEditServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HistoryNewServlet() {
+    public ProgressEditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,12 +35,18 @@ public class HistoryNewServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute("_token", request.getSession().getId());
 
-        History h = new History();
+        EntityManager em = DBUtil.createEntityManager();
 
-        h.setLearned_date(new Date(System.currentTimeMillis()));
-        request.setAttribute("history", h);
+        User u = (User) request.getSession().getAttribute("login_user");
+        request.getSession().setAttribute("user_id", u.getUser_id());
+        User login_user = em.find(User.class, request.getSession().getAttribute("user_id"));
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/history/new.jsp");
+        em.close();
+
+        request.getSession().setAttribute("user", login_user);
+        request.getSession().setAttribute("user_id", login_user.getUser_id());
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/progress/edit.jsp");
         rd.forward(request, response);
     }
 

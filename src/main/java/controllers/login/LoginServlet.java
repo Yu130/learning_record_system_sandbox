@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.User;
 import utils.DBUtil;
-import utils.EncryptUtil;
 
 /**
  * Servlet implementation class LoginServlet
@@ -56,18 +55,18 @@ public class LoginServlet extends HttpServlet {
         Boolean check_result = false;
 
         String user_id = request.getParameter("user_id");
-        String plain_pass = request.getParameter("password");
+        String password = request.getParameter("password");
 
         User u = null;
 
-        if (user_id != null && !user_id.equals("") && plain_pass != null && !plain_pass.equals("")) {
+        if (user_id != null && !user_id.equals("") && password != null && !password.equals("")) {
             EntityManager em = DBUtil.createEntityManager();
 
-            String password = EncryptUtil.getPasswordEncrypt(
-                    plain_pass,
-                    (String) this.getServletContext().getAttribute("pepper"));
+            //            String password = EncryptUtil.getPasswordEncrypt(
+            //                    plain_pass,
+            //                    (String) this.getServletContext().getAttribute("pepper"));
 
-            // 社員番号とパスワードが正しいかチェックする
+            // ユーザIDとパスワードが正しいかチェックする
             try {
                 u = em.createNamedQuery("checkLoginCodeAndPassword", User.class)
                         .setParameter("user_id", user_id)
@@ -96,7 +95,7 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("login_user", u);
 
             request.getSession().setAttribute("flush", "ログインしました。");
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect(request.getContextPath() + "/history/index");
         }
     }
 
