@@ -31,9 +31,9 @@ public class UserValidator {
     }
 
     // ユーザID
-    private static String validateCode(Integer integer, Boolean codeDuplicateCheckFlag) {
+    private static String validateCode(String userId, Boolean codeDuplicateCheckFlag) {
         // 必須入力チェック
-        if (integer == null || integer.equals("")) {
+        if (userId == null || userId.equals("")) {
             return "ユーザIDを入力してください。";
 
         }
@@ -42,7 +42,7 @@ public class UserValidator {
         if (codeDuplicateCheckFlag) {
             EntityManager em = DBUtil.createEntityManager();
             long employees_count = (long) em.createNamedQuery("checkRegisteredUserId", Long.class)
-                    .setParameter("user_id", integer).getSingleResult();
+                    .setParameter("user_id", userId).getSingleResult();
             em.close();
             if (employees_count > 0) {
                 return "入力されたユーザIDの情報はすでに存在しています。";
